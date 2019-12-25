@@ -24,6 +24,6 @@ function validateGenre(genre) {
     return Joi.validate(genre, schema);
 }
 
-modle.exports.genreSchema = genreSchema;
+module.exports.genreSchema = genreSchema;
 module.exports.Genre = Genre;
 module.exports.validate = validateGenre;
