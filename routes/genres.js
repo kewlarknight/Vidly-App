@@ -1,3 +1,5 @@
+const auth = require('../middleware/auth');
+const admin = require('../middleware/admin');
 const {
     Genre,
     validate
@@ -28,7 +30,7 @@ router.get("/:id", async (req, res) => {
 });
 
 //POST (Insert)
-router.post("/", async (req, res) => {
+router.post("/", auth, async (req, res) => {
     const {
         error
     } = validate(req.body); // result.error
@@ -46,7 +48,7 @@ router.post("/", async (req, res) => {
 });
 
 //PUT (Update)
-router.put("/:id", async (req, res) => {
+router.put("/:id", auth, async (req, res) => {
     //Validate
     //If invalid, return 400- Bad request
     const {
@@ -73,7 +75,7 @@ router.put("/:id", async (req, res) => {
 });
 
 //DELETE
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", [auth, admin], async (req, res) => {
 
     // find genre and delete
     const genre = await Genre.findByIdAndRemove(req.params.id);

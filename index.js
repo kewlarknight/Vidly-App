@@ -12,9 +12,12 @@ const app = express();
 app.use(express.json());
 
 
-if (!config.get('jwtPrivateKey'))
+if (!config.get('jwtPrivateKey')) {
+  console.error('FATAL Error: jwtPrivateKey is not defined');
+  process.exit(1);
+}
 
-  mongoose.connect('mongodb://localhost/vidly', {
+mongoose.connect('mongodb://localhost/vidly', {
     useNewUrlParser: true,
     useUnifiedTopology: true
   })
@@ -24,7 +27,7 @@ if (!config.get('jwtPrivateKey'))
 //add routes
 app.use('/', home);
 app.use('/api/genres', genres);
-app.use('/api/customers', customers);e
+app.use('/api/customers', customers);
 app.use('/api/users', users);
 app.use('/api/auth', auth);
 
