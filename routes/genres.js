@@ -1,6 +1,10 @@
+const validateObjectId = require('../middleware/validateObjectId');
 const auth = require("../middleware/auth");
 const admin = require("../middleware/admin");
-const { Genre, validate } = require("../models/genre");
+const {
+  Genre,
+  validate
+} = require("../models/genre");
 const mongoose = require("mongoose");
 const express = require("express");
 const router = express.Router();
@@ -14,7 +18,8 @@ router.get("/", async (req, res) => {
   res.send(genres);
 });
 
-router.get("/:id", async (req, res, next) => {
+router.get("/:id", validateObjectId, async (req, res, next) => {
+
   const genre = await Genre.findById(req.params.id);
   if (!genre) return res.status(404).send("Course with given ID not found");
   res.send(genre);
@@ -22,7 +27,9 @@ router.get("/:id", async (req, res, next) => {
 
 //POST (Insert)
 router.post("/", auth, async (req, res) => {
-  const { error } = validate(req.body); // result.error
+  const {
+    error
+  } = validate(req.body); // result.error
 
   if (error) {
     res.status(400).send(error.details[0].message);
@@ -40,7 +47,9 @@ router.post("/", auth, async (req, res) => {
 router.put("/:id", auth, async (req, res) => {
   //Validate
   //If invalid, return 400- Bad request
-  const { error } = validate(req.body); // result.error
+  const {
+    error
+  } = validate(req.body); // result.error
 
   if (error) {
     res.status(400).send(error.details[0].message);
@@ -49,11 +58,9 @@ router.put("/:id", auth, async (req, res) => {
 
   //Look up course and updat
   const genre = await Genre.findByIdAndUpdate(
-    req.params.id,
-    {
+    req.params.id, {
       name: req.body.name
-    },
-    {
+    }, {
       new: true
     }
   );
