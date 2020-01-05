@@ -1,4 +1,3 @@
-
 const Joi = require("joi");
 const validate = require('../middleware/validate');
 const {
@@ -6,13 +5,10 @@ const {
 } = require("../models/rental");
 const {
     Movie
-} = require("../../models/movie");
+} = require("../models/movie");
 const auth = require("../middleware/auth");
 const express = require("express");
 const router = express.Router();
-
-
-
 
 //GET
 router.post("/", [auth, validate(validate)], async (req, res) => {

@@ -1,4 +1,4 @@
-module.exports(validator) => {
+module.exports = (validator) => {
 
     return (req, res, next) => {
         const {
@@ -10,5 +10,5 @@ module.exports(validator) => {
             return;
         }
         next();
-    }
-} 
+    };
+};
