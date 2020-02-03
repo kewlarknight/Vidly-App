@@ -2,6 +2,7 @@ const {
   Rental,
   validate
 } = require("../models/rental");
+const auth = require("../middleware/auth");
 const {
   Movie
 } = require("../models/movie");
@@ -20,7 +21,7 @@ router.get("/", async (req, res) => {
   res.send(rentals);
 });
 
-router.post("/", async (req, res) => {
+router.post("/", auth, async (req, res) => {
   const {
     error
   } = validate(req.body);
